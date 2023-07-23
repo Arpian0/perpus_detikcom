@@ -69,6 +69,9 @@
             <input type="password" name="confirm_password" placeholder="Confirm Password" required><br>
             <button type="submit">Register</button>
         </form>
+        <div style="text-align: right;">
+            Sudah Punya Akun? Klik <a href="/login">Login</a>
+        </div>
     </div>
 </body>
 

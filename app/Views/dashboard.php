@@ -11,7 +11,6 @@
 <body>
     <h1>Selamat datang, <?= esc($username) ?>!</h1>
     <p>Ini adalah halaman dashboard Anda.</p>
-    <a href="/logout">Logout</a>
 </body>
 
 </html>

@@ -6,12 +6,16 @@ namespace App\Controllers;
 
 use App\Models\BookModel;
 use App\Models\CategoryModel;
+use App\Models\UserRoleModel;
 use CodeIgniter\Controller;
 
 class BookController extends Controller
 {
     public function index()
     {
+        // Load session helper
+        helper('session');
+
         $categoryModel = new CategoryModel();
         $data['categories'] = $categoryModel->getCategories();
 
@@ -29,6 +33,10 @@ class BookController extends Controller
             $data['selected_category'] = null;
             $data['books'] = $bookModel->getBooksWithCategory();
         }
+
+        // Check if user is admin, and set $is_admin variable accordingly
+        $isAdmin = $this->isAdmin();
+        $data['is_admin'] = $isAdmin;
 
         return view('books/index', $data);
     }
@@ -166,7 +174,7 @@ class BookController extends Controller
 
                 $bookModel->update($id, $data);
 
-                return redirect()->to('/books')->with('success', 'Buku berhasil diperbarui.');
+                return redirect()->to('/books/form')->with('success', 'Buku berhasil diperbarui.');
             }
         }
 
@@ -193,9 +201,24 @@ class BookController extends Controller
             }
 
             $bookModel->delete($id);
-            return redirect()->to('/books')->with('success', 'Buku berhasil dihapus.');
+            return redirect()->to('/books/form')->with('success', 'Buku berhasil dihapus.');
         } else {
-            return redirect()->to('/books')->with('error', 'Buku tidak ditemukan.');
+            return redirect()->to('/books/form')->with('error', 'Buku tidak ditemukan.');
         }
+    }
+
+    // Helper function to check if user is admin
+    private function isAdmin()
+    {
+        // Load session helper
+        helper('session');
+
+        $userRoleModel = new UserRoleModel();
+        $isAdmin = session('is_admin');
+        if ($isAdmin) {
+            $userId = session('user_id');
+            return $userRoleModel->hasAdminRole($userId);
+        }
+        return false;
     }
 }

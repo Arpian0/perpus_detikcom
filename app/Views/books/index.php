@@ -35,14 +35,35 @@
                             <h5 class="card-title"><?= $book['title'] ?></h5>
                             <p class="card-text"><?= $book['description'] ?></p>
 
-                            <!-- Buttons for delete, edit, and read actions -->
-                            <div style="text-align: center;">
-                                <div class="btn-group">
-                                    <a style="padding-right: 50px;" href="<?= site_url('books/read/' . $book['id']) ?>" class="btn btn-info">Read</a>
-                                    <a style="padding-right: 50px;" href="<?= site_url('books/edit/' . $book['id']) ?>" class="btn btn-primary">Edit</a>
-                                    <a style="padding-right: 50px;" href="<?= site_url('books/delete/' . $book['id']) ?>" class="btn btn-danger" onclick="return confirm('Apakah Anda yakin ingin menghapus buku ini?')">Delete</a>
-                                </div>
-                            </div>
+                            <?php if (session()->has('user_id')) : ?>
+                                <?php $userRoleModel = new \App\Models\UserRoleModel(); ?>
+                                <?php $userRole = $userRoleModel->getRoleByUserId(session('user_id')); ?>
+                                <?php if ($userRole) : ?>
+                                    <?php if ($userRole['role'] === 'user') : ?>
+                                        <div style="text-align: center;">
+                                            <a style="padding-right: 50px;" href="<?= site_url('books/read/' . $book['id']) ?>" class="btn btn-info">Read</a>
+                                        </div>
+                                    <?php elseif ($userRole['role'] === 'admin') : ?>
+                                        <table class="table mt-3">
+                                            <tr>
+                                                <td>
+                                                    <a href="<?= site_url('books/edit/' . $book['id']) ?>" class="btn btn-primary">Edit</a>
+                                                </td>
+                                                <td>
+                                                    <a href="<?= site_url('books/read/' . $book['id']) ?>" class="btn btn-info">Read</a>
+                                                </td>
+                                                <td>
+                                                    <a href="<?= site_url('books/delete/' . $book['id']) ?>" class="btn btn-danger" onclick="return confirm('Apakah Anda yakin ingin menghapus buku ini?')">Delete</a>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                        <!-- Tampilkan seluruh menu untuk admin -->
+                                        <!-- Tambahkan menu lain untuk admin di sini -->
+                                    <?php endif; ?>
+                                <?php endif; ?>
+                                <!-- Tambahkan menu lain di sini (misalnya, Logout) -->
+                            <?php endif; ?>
+
                         </div>
                     </div>
                 </div>

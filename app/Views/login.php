@@ -81,6 +81,9 @@
         <p style="padding-top: 10px;">Password :</p>
         <input type="password" name="password" placeholder="Password" required>
         <button type="submit">Login</button>
+        <div style="padding-top: 20px;text-align:right;">
+            Belum Punya Akun? Klik <a href="/register">Register</a>
+        </div>
     </form>
 </body>
 

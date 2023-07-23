@@ -41,7 +41,7 @@ class BookModel extends Model
     {
         if ($category_id) {
             // Filter books by the selected category ID
-            return $this->select('books.*, categories.name')
+            return $this->select('books.*, categories.name as category_name')
                 ->join('categories', 'categories.id = books.category_id')
                 ->where('categories.id', $category_id)
                 ->get()

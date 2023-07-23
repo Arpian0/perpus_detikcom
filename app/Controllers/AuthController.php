@@ -5,6 +5,7 @@
 namespace App\Controllers;
 
 use App\Models\UserModel;
+use App\Models\UserRoleModel;
 use CodeIgniter\Controller;
 
 class AuthController extends Controller
@@ -39,5 +40,51 @@ class AuthController extends Controller
         ]);
 
         return redirect()->to('/login')->with('success', 'Registrasi berhasil! Silakan login.');
+    }
+
+    public function loginForm()
+    {
+        return view('login');
+    }
+
+    public function login()
+    {
+        // Lakukan validasi login
+        // Misalnya, validasi username/email dan password dengan database
+        $usernameOrEmail = $this->request->getPost('username_or_email');
+        $password = $this->request->getPost('password');
+
+        $userModel = new UserModel();
+        $user = $userModel->where('username', $usernameOrEmail)
+            ->orWhere('email', $usernameOrEmail)
+            ->first();
+
+        if ($user && password_verify($password, $user['password'])) {
+            // Jika login berhasil, simpan informasi pengguna ke sesi
+            $this->session->set('user_id', $user['id']);
+            $this->session->set('username', $user['username']);
+
+            // Tambahkan logika untuk mengatur role "admin"
+            $userRoleModel = new UserRoleModel();
+            $isAdmin = $userRoleModel->hasAdminRole($user['id']);
+            if ($isAdmin) {
+                // Jika pengguna memiliki role "admin", set sesi admin ke true
+                $this->session->set('is_admin', true);
+            }
+            // Redirect ke halaman dashboard atau halaman lain yang sesuai
+            return redirect()->to('/dashboard')->with('success', 'Login successful.');
+        } else {
+            return redirect()->back()->withInput()->with('error', 'Invalid credentials.');
+        }
+    }
+
+    public function logout()
+    {
+        // Hapus informasi pengguna dari sesi saat logout
+        $this->session->remove('user_id');
+        $this->session->remove('username');
+        $this->session->remove('is_admin'); // Hapus sesi admin saat logout
+        // Redirect ke halaman login atau halaman lain yang sesuai
+        return redirect()->to('/login')->with('success', 'Logout successful.');
     }
 }
