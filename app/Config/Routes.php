@@ -39,6 +39,9 @@ $routes->get('/logout', 'LoginController::logout');
 
 $routes->get('/dashboard', 'DashboardController::index');
 
+// app/config/Routes.php
+
+$routes->get('/', 'BookController::index');
 $routes->get('/books', 'BookController::index');
 $routes->get('/books/create', 'BookController::create');
 $routes->post('/books/store', 'BookController::store');
@@ -46,28 +49,43 @@ $routes->get('/books/edit/(:num)', 'BookController::edit/$1');
 $routes->post('/books/update/(:num)', 'BookController::update/$1');
 $routes->get('/books/delete/(:num)', 'BookController::delete/$1');
 
+$routes->get('/categories', 'CategoryController::index');
+$routes->get('/categories/create', 'CategoryController::create');
+$routes->post('/categories/store', 'CategoryController::store');
+$routes->get('/categories/edit/(:num)', 'CategoryController::edit/$1');
+$routes->post('/categories/update/(:num)', 'CategoryController::update/$1');
+$routes->get('/categories/delete/(:num)', 'CategoryController::delete/$1');
+
+
+// $routes->get('/books', 'BookController::index');
+// $routes->get('/books/create', 'BookController::create');
+// $routes->post('/books/store', 'BookController::store');
+// $routes->get('/books/edit/(:num)', 'BookController::edit/$1');
+// $routes->post('/books/update/(:num)', 'BookController::update/$1');
+// $routes->get('/books/delete/(:num)', 'BookController::delete/$1');
 
 // app/config/Routes.php
 
-$routes->get('/', 'BookController::index');
+// $routes->get('/', 'BookController::index');
 
-// Route untuk daftar kategori buku
-$routes->get('/categories', 'CategoryController::index');
+// // Route untuk daftar kategori buku
+// $routes->get('/categories', 'CategoryController::index');
 
-// Route untuk halaman tambah kategori buku
-$routes->get('/categories/create', 'CategoryController::create');
+// // Route untuk halaman tambah kategori buku
+// $routes->get('/categories/create', 'CategoryController::create');
 
-// Route untuk aksi tambah kategori buku
-$routes->post('/categories/store', 'CategoryController::store');
+// // Route untuk aksi tambah kategori buku
+// $routes->post('/categories/store', 'CategoryController::store');
 
-// Route untuk halaman edit kategori buku
-$routes->get('/categories/edit/(:num)', 'CategoryController::edit/$1');
+// // Route untuk halaman edit kategori buku
+// $routes->get('/categories/edit/(:num)', 'CategoryController::edit/$1');
 
-// Route untuk aksi update kategori buku
-$routes->post('/categories/update/(:num)', 'CategoryController::update/$1');
+// // Route untuk aksi update kategori buku
+// $routes->post('/categories/update/(:num)', 'CategoryController::update/$1');
 
-// Route untuk aksi hapus kategori buku
-$routes->get('/categories/delete/(:num)', 'CategoryController::delete/$1');
+// // Route untuk aksi hapus kategori buku
+// $routes->get('/categories/delete/(:num)', 'CategoryController::delete/$1');
+
 
 
 

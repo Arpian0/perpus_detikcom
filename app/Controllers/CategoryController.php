@@ -29,7 +29,7 @@ class CategoryController extends Controller
         if ($this->request->getMethod() === 'post' && $this->validate([
             'name' => 'required|min_length[3]|max_length[255]'
         ])) {
-            $categoryModel->insert([
+            $categoryModel->insertCategory([
                 'name' => $this->request->getPost('name')
             ]);
 
@@ -54,7 +54,7 @@ class CategoryController extends Controller
         if ($this->request->getMethod() === 'post' && $this->validate([
             'name' => 'required|min_length[3]|max_length[255]'
         ])) {
-            $categoryModel->update($id, [
+            $categoryModel->updateCategory($id, [
                 'name' => $this->request->getPost('name')
             ]);
 
@@ -69,10 +69,10 @@ class CategoryController extends Controller
     public function delete($id)
     {
         $categoryModel = new CategoryModel();
-        $category = $categoryModel->find($id);
+        $category = $categoryModel->getCategory($id);
 
         if ($category) {
-            $categoryModel->delete($id);
+            $categoryModel->deleteCategory($id);
             return redirect()->to('/categories')->with('success', 'Kategori berhasil dihapus.');
         }
 

@@ -12,8 +12,23 @@ class BookController extends Controller
 {
     public function index()
     {
+        $categoryModel = new CategoryModel();
+        $data['categories'] = $categoryModel->getCategories();
+
+        // Get the selected category ID from the form submission
+        $category_id = $this->request->getGet('category_id');
+
         $bookModel = new BookModel();
-        $data['books'] = $bookModel->getBooksWithCategory();
+
+        if ($category_id) {
+            // Filter books by the selected category
+            $data['selected_category'] = $categoryModel->getCategory($category_id);
+            $data['books'] = $bookModel->getBooksWithCategory($category_id);
+        } else {
+            // If no category is selected, show all books
+            $data['selected_category'] = null;
+            $data['books'] = $bookModel->getBooksWithCategory();
+        }
 
         return view('books/index', $data);
     }

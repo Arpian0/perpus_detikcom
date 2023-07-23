@@ -19,8 +19,10 @@ class DashboardController extends Controller
 
         // Ambil informasi pengguna dari sesi.
         $data['username'] = session('username');
+
         $bookModel = new BookModel();
         $data['books'] = $bookModel->findAll();
+
         $categoryModel = new CategoryModel();
         $data['categories'] = $categoryModel->getCategories();
 
