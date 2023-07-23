@@ -92,6 +92,19 @@ class BookController extends Controller
         ];
     }
 
+    public function read($id)
+    {
+        $bookModel = new BookModel();
+        $book = $bookModel->getBook($id);
+
+        if ($book) {
+            $data['book'] = $book;
+            return view('books/read', $data);
+        } else {
+            return redirect()->to('/books')->with('error', 'Buku tidak ditemukan.');
+        }
+    }
+
     public function edit($id)
     {
         $bookModel = new BookModel();

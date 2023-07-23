@@ -45,6 +45,7 @@ $routes->get('/', 'BookController::index');
 $routes->get('/books', 'BookController::index');
 $routes->get('/books/create', 'BookController::create');
 $routes->post('/books/store', 'BookController::store');
+$routes->get('/books/read/(:num)', 'BookController::read/$1');
 $routes->get('/books/edit/(:num)', 'BookController::edit/$1');
 $routes->post('/books/update/(:num)', 'BookController::update/$1');
 $routes->get('/books/delete/(:num)', 'BookController::delete/$1');
@@ -55,6 +56,8 @@ $routes->post('/categories/store', 'CategoryController::store');
 $routes->get('/categories/edit/(:num)', 'CategoryController::edit/$1');
 $routes->post('/categories/update/(:num)', 'CategoryController::update/$1');
 $routes->get('/categories/delete/(:num)', 'CategoryController::delete/$1');
+
+$routes->get('/books/form', 'DashboardController::form');
 
 
 // $routes->get('/books', 'BookController::index');

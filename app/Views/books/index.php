@@ -34,6 +34,15 @@
                         <div class="card-body">
                             <h5 class="card-title"><?= $book['title'] ?></h5>
                             <p class="card-text"><?= $book['description'] ?></p>
+
+                            <!-- Buttons for delete, edit, and read actions -->
+                            <div style="text-align: center;">
+                                <div class="btn-group">
+                                    <a style="padding-right: 50px;" href="<?= site_url('books/read/' . $book['id']) ?>" class="btn btn-info">Read</a>
+                                    <a style="padding-right: 50px;" href="<?= site_url('books/edit/' . $book['id']) ?>" class="btn btn-primary">Edit</a>
+                                    <a style="padding-right: 50px;" href="<?= site_url('books/delete/' . $book['id']) ?>" class="btn btn-danger" onclick="return confirm('Apakah Anda yakin ingin menghapus buku ini?')">Delete</a>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>

@@ -29,6 +29,17 @@ class DashboardController extends Controller
         return view('dashboard', $data);
     }
 
+    public function form()
+    {
+        $bookModel = new BookModel();
+        $data['books'] = $bookModel->findAll();
+
+        $categoryModel = new CategoryModel();
+        $data['categories'] = $categoryModel->getCategories();
+
+        return view('/books/form', $data);
+    }
+
     private function isLoggedIn()
     {
         $this->session = session();

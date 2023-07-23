@@ -18,7 +18,7 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav">
                     <li class="nav-item">
-                        <a class="nav-link" href="/books">Form Data Buku</a>
+                        <a class="nav-link" href="/books/form">Form Data Buku</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="/books">Daftar Buku</a>
