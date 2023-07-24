@@ -29,19 +29,18 @@ $routes->set404Override();
 
 // We get a performance increase by specifying the default
 // route since we don't have to scan directories.
-$routes->get('/', 'Home::index');
 
-$routes->get('/register', 'AuthController::registerForm');
-$routes->post('/register', 'AuthController::register');
+$routes->get('/', 'LoginController::loginForm');
 $routes->get('/login', 'LoginController::loginForm');
 $routes->post('/login', 'LoginController::login');
+$routes->get('/register', 'AuthController::registerForm');
+$routes->post('/register', 'AuthController::register');
 $routes->get('/logout', 'LoginController::logout');
 
 $routes->get('/dashboard', 'DashboardController::index');
 
 // app/config/Routes.php
 
-$routes->get('/', 'BookController::index');
 $routes->get('/books', 'BookController::index');
 $routes->get('/books/create', 'BookController::create');
 $routes->post('/books/store', 'BookController::store');

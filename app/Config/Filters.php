@@ -8,6 +8,7 @@ use CodeIgniter\Filters\DebugToolbar;
 use CodeIgniter\Filters\Honeypot;
 use CodeIgniter\Filters\InvalidChars;
 use CodeIgniter\Filters\SecureHeaders;
+use App\Filters\AuthFilter;
 
 class Filters extends BaseConfig
 {
@@ -16,6 +17,7 @@ class Filters extends BaseConfig
      * make reading things nicer and simpler.
      */
     public array $aliases = [
+        'auth' => AuthFilter::class, // Menambahkan filter "auth" dengan menggunakan AuthFilter
         'csrf'          => CSRF::class,
         'toolbar'       => DebugToolbar::class,
         'honeypot'      => Honeypot::class,
@@ -29,6 +31,7 @@ class Filters extends BaseConfig
      */
     public array $globals = [
         'before' => [
+            'auth' => ['except' => ['/login', '/register']], // Terapkan filter "auth" pada semua route, kecuali '/login' dan '/register'
             // 'honeypot',
             // 'csrf',
             // 'invalidchars',
