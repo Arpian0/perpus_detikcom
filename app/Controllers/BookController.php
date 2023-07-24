@@ -130,60 +130,71 @@ class BookController extends Controller
 
     public function update($id)
     {
-        $bookModel = new BookModel();
+        // Check if the form is submitted
+        if ($this->request->getMethod() === 'post') {
+            // Get the book data from the database
+            $bookModel = new BookModel();
+            $book = $bookModel->find($id);
 
-        if ($this->request->getMethod() === 'post' && $this->validate([
-            'title' => 'required|min_length[3]|max_length[255]',
-            'category_id' => 'required',
-            'description' => 'required',
-            'quantity' => 'required|numeric',
-        ])) {
-            $book = $bookModel->getBook($id);
-
-            if ($book) {
-                $data = [
-                    'title' => $this->request->getPost('title'),
-                    'category_id' => $this->request->getPost('category_id'),
-                    'description' => $this->request->getPost('description'),
-                    'quantity' => $this->request->getPost('quantity'),
-                ];
-
-                // Meng-handle file buku dan cover jika ada perubahan
-                $bookFile = $this->request->getFile('book_file');
-                $bookCover = $this->request->getFile('book_cover');
-
-                if ($bookFile->isValid()) {
-                    // Menghapus file lama jika ada file baru
-                    unlink('./uploads/' . $book['book_file']);
-
-                    // Upload file buku baru
-                    $newBookFile = $bookFile->getRandomName();
-                    $bookFile->move('./uploads', $newBookFile);
-                    $data['book_file'] = $newBookFile;
-                }
-
-                if ($bookCover->isValid()) {
-                    // Menghapus file lama jika ada file baru
-                    unlink('./uploads/' . $book['book_cover']);
-
-                    // Upload cover buku baru
-                    $newBookCover = $bookCover->getRandomName();
-                    $bookCover->move('./uploads', $newBookCover);
-                    $data['book_cover'] = $newBookCover;
-                }
-
-                $bookModel->update($id, $data);
-
-                return redirect()->to('/books/form')->with('success', 'Buku berhasil diperbarui.');
+            if (!$book) {
+                return redirect()->to('/books')->with('error', 'Book not found.');
             }
+
+            // Get the uploaded PDF file and image file
+            $pdfFile = $this->request->getFile('book_file');
+            $imageFile = $this->request->getFile('book_cover');
+
+            // Get the updated book data from the form
+            $data = [
+                'title' => $this->request->getPost('title'),
+                'category_id' => $this->request->getPost('category_id'),
+                'description' => $this->request->getPost('description'),
+                'quantity' => $this->request->getPost('quantity'),
+            ];
+
+            // Check if a new PDF file is uploaded
+            if ($pdfFile->isValid() && !$pdfFile->hasMoved()) {
+                // Delete the old PDF file if it exists
+                if ($book['book_file']) {
+                    unlink('uploads/' . $book['book_file']);
+                }
+
+                // Move the new PDF file to the uploads folder
+                $newPdfName = $pdfFile->getRandomName();
+                $pdfFile->move('uploads', $newPdfName);
+                $data['book_file'] = $newPdfName;
+            }
+
+            // Check if a new image file is uploaded
+            if ($imageFile->isValid() && !$imageFile->hasMoved()) {
+                // Delete the old image file if it exists
+                if ($book['book_cover']) {
+                    unlink('uploads/' . $book['book_cover']);
+                }
+
+                // Move the new image file to the uploads folder
+                $newImageName = $imageFile->getRandomName();
+                $imageFile->move('uploads', $newImageName);
+                $data['book_cover'] = $newImageName;
+            }
+
+            // Update the book data in the database
+            $bookModel->update($id, $data);
+
+            return redirect()->to('/books/form')->with('success', 'Book updated successfully.');
         }
 
-        $categoryModel = new CategoryModel();
-        $data['categories'] = $categoryModel->getCategories();
+        // If the form is not submitted, load the view for updating the book
+        $bookModel = new BookModel();
         $data['book'] = $bookModel->getBook($id);
 
-        return view('books/edit', $data);
+        // Load the category data from the database to populate the category dropdown
+        $categoryModel = new CategoryModel();
+        $data['categories'] = $categoryModel->getCategories();
+
+        return view('books/update', $data);
     }
+
 
     public function delete($id)
     {

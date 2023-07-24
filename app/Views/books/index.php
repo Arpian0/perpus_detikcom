@@ -41,7 +41,7 @@
                                 <?php if ($userRole) : ?>
                                     <?php if ($userRole['role'] === 'user') : ?>
                                         <div style="text-align: center;">
-                                            <a style="padding-right: 50px;" href="<?= site_url('books/read/' . $book['id']) ?>" class="btn btn-info">Read</a>
+                                            <a href="<?= site_url('books/read/' . $book['id']) ?>" class="btn btn-info">Read</a>
                                         </div>
                                     <?php elseif ($userRole['role'] === 'admin') : ?>
                                         <table class="table mt-3">

@@ -10,6 +10,11 @@
             <h5 class="card-title"><?= $book['title'] ?></h5>
             <p class="card-text"><?= $book['description'] ?></p>
             <p class="card-text">Jumlah: <?= $book['quantity'] ?></p>
+            <?php if ($book['book_file']) : ?>
+                <a href="<?= base_url('uploads/' . $book['book_file']) ?>" class="btn btn-primary" download>Download PDF</a>
+            <?php else : ?>
+                <p class="card-text">File PDF tidak tersedia.</p>
+            <?php endif; ?>
             <a href="<?= site_url('books') ?>" class="btn btn-secondary">Kembali ke Daftar Buku</a>
         </div>
     </div>

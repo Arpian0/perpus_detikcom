@@ -50,21 +50,26 @@ class CategoryController extends Controller
     public function update($id)
     {
         $categoryModel = new CategoryModel();
+        $category = $categoryModel->getCategory($id);
 
-        if ($this->request->getMethod() === 'post' && $this->validate([
-            'name' => 'required|min_length[3]|max_length[255]'
-        ])) {
-            $categoryModel->updateCategory($id, [
-                'name' => $this->request->getPost('name')
-            ]);
+        if ($category) {
+            if ($this->request->getMethod() === 'post' && $this->validate([
+                'name' => 'required|min_length[3]|max_length[255]'
+            ])) {
+                $data = [
+                    'name' => $this->request->getPost('name')
+                ];
+                $categoryModel->updateCategory($id, $data);
+                return redirect()->to('/categories')->with('success', 'Kategori berhasil diperbarui.');
+            }
 
-            return redirect()->to('/categories')->with('success', 'Kategori berhasil diperbarui.');
+            $data['category'] = $category;
+            return view('categories/edit', $data);
         }
 
-        $data['category'] = $categoryModel->getCategory($id);
-
-        return view('categories/edit', $data);
+        return redirect()->to('/categories')->with('error', 'Kategori tidak ditemukan.');
     }
+
 
     public function delete($id)
     {

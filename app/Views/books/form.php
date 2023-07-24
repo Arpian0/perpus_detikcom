@@ -37,7 +37,13 @@
                             <tr>
                                 <td><?= $book['id'] ?></td>
                                 <td><?= esc($book['title']) ?></td>
-                                <td><?= esc($book['category_id']) ?></td>
+                                <td>
+                                    <?php
+                                    $categoryModel = new \App\Models\CategoryModel();
+                                    $category = $categoryModel->getCategory($book['category_id']);
+                                    echo esc($category['name']);
+                                    ?>
+                                </td>
                                 <td><?= esc($book['description']) ?></td>
                                 <td><?= $book['quantity'] ?></td>
                                 <td><?= $book['book_file'] ?></td>
@@ -72,7 +78,13 @@
                             <tr>
                                 <td><?= $book['id'] ?></td>
                                 <td><?= esc($book['title']) ?></td>
-                                <td><?= esc($book['category_id']) ?></td>
+                                <td>
+                                    <?php
+                                    $categoryModel = new \App\Models\CategoryModel();
+                                    $category = $categoryModel->getCategory($book['category_id']);
+                                    echo esc($category['name']);
+                                    ?>
+                                </td>
                                 <td><?= esc($book['description']) ?></td>
                                 <td><?= $book['quantity'] ?></td>
                                 <td><?= $book['book_file'] ?></td>

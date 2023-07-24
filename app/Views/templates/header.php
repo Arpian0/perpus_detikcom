@@ -70,7 +70,7 @@
                                     <a class="nav-link" href="/categories">Data Kategori Buku</a>
                                 </li>
                             <?php elseif ($userRole['role'] === 'admin') : ?>
-                                <li style="padding-left: 100px;" class="nav-item">
+                                <li style="padding-left: 90px;" class="nav-item">
                                     <a class="nav-link" href="/books/form">Form Data Buku</a>
                                 </li>
                                 <li class="nav-item">
