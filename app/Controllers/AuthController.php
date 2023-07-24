@@ -33,10 +33,19 @@ class AuthController extends Controller
         $password = password_hash($this->request->getPost('password'), PASSWORD_DEFAULT);
 
         $userModel = new UserModel();
-        $userModel->insert([
+
+        // Insert the user and get the inserted user's ID
+        $userId = $userModel->insertUserAndGetId([
             'username' => $username,
             'email' => $email,
             'password' => $password,
+        ]);
+
+        // Create a new user role with the role set to "user" for the registered user
+        $userRoleModel = new UserRoleModel();
+        $userRoleModel->insert([
+            'user_id' => $userId,
+            'role' => 'user',
         ]);
 
         return redirect()->to('/login')->with('success', 'Registrasi berhasil! Silakan login.');

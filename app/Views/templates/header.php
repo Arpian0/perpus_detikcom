@@ -12,7 +12,39 @@
     <!-- Untuk ekspor ke PDF -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
 
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
+    <!-- jQuery (required for Bootstrap JS plugins) -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+
+    <!-- Bootstrap JS -->
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
+
+
 </head>
+
+<!-- Logout Confirmation Modal -->
+<div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="logoutModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="logoutModalLabel">Konfirmasi Logout</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                Anda yakin ingin logout?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                <a class="btn btn-danger" href="/logout">Logout</a>
+            </div>
+        </div>
+    </div>
+</div>
+
 
 <body>
     <header>
@@ -56,7 +88,7 @@
                         <?php endif; ?>
                         <!-- Tambahkan menu lain di sini (misalnya, Logout) -->
                         <li style="padding-left: 200px;" class="nav-item">
-                            <a class="nav-link btn btn-danger" href="/logout">Logout</a>
+                            <a class="nav-link btn btn-danger" href="#" data-toggle="modal" data-target="#logoutModal">Logout</a>
                         </li>
                     <?php endif; ?>
                 </ul>
